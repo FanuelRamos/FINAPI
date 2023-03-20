@@ -10,8 +10,7 @@ describe('AccountEntity test', () => {
       address: '',
       postalCode: '',
       phone: '',
-      email: '',
-      password: ''
+      email: ''
     })).toThrow()
   })
 
@@ -24,8 +23,7 @@ describe('AccountEntity test', () => {
       address: 'any_address',
       postalCode: 'any_post',
       phone: 'any_phone',
-      email: 'any_email',
-      password: 'any_password'
+      email: 'any_email'
     })).toThrow()
   })
 })

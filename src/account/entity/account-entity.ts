@@ -12,7 +12,6 @@ interface AccountProps {
   postalCode: string
   phone: string
   email: string
-  password: string
   createdAt?: Date
   updatedAt?: Date
 }
@@ -26,7 +25,6 @@ export default class AccountEntity extends BaseEntity {
   private _postalCode: string
   private _phone: string
   private _email: string
-  private _password: string
 
   constructor (props: AccountProps) {
     super(props.id, props.createdAt, props.updatedAt)
@@ -38,7 +36,6 @@ export default class AccountEntity extends BaseEntity {
     this._postalCode = props.postalCode
     this._phone = props.phone
     this._email = props.email
-    this._password = props.password
 
     this.validate()
   }
@@ -55,7 +52,6 @@ export default class AccountEntity extends BaseEntity {
   get postalCode (): string { return this._postalCode }
   get phone (): string { return this._phone }
   get email (): string { return this._email }
-  get password (): string { return this._password }
 
   set name (value: string) { this._name = value }
   set burth (value: Date) { this._burth = value }
@@ -65,5 +61,4 @@ export default class AccountEntity extends BaseEntity {
   set postalCode (value: string) { this._postalCode = value }
   set phone (value: string) { this._phone = value }
   set email (value: string) { this._email = value }
-  set password (value: string) { this._password = value }
 }

@@ -15,8 +15,7 @@ export default class AccountYupValidator implements ValidatorInterface<Account> 
           address: yup.string().required('Address is required'),
           postalCode: yup.string().required('Postal Code is required'),
           phone: yup.string().required('Phone is required'),
-          email: yup.string().email().required('Email is required'),
-          password: yup.string().required('Password is required')
+          email: yup.string().email().required('Email is required')
         })
         .validateSync(
           {
@@ -27,8 +26,7 @@ export default class AccountYupValidator implements ValidatorInterface<Account> 
             address: entity.address,
             postalCode: entity.postalCode,
             phone: entity.phone,
-            email: entity.email,
-            password: entity.password
+            email: entity.email
           },
           {
             abortEarly: false
