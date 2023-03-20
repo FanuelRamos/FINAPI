@@ -2,7 +2,7 @@ import ValidatorInterface from '../../@shared/validators/validator-interface'
 import Account from '../entity/account-entity'
 import * as yup from 'yup'
 
-export default class AccoutYupValidator implements ValidatorInterface<Account> {
+export default class AccountYupValidator implements ValidatorInterface<Account> {
   validate (entity: Account): void {
     try {
       yup
