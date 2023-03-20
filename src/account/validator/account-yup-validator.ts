@@ -37,7 +37,7 @@ export default class AccountYupValidator implements ValidatorInterface<Account> 
     } catch (errors) {
       const e = errors as yup.ValidationError
       e.errors.forEach((error) => {
-        console.log(error)
+        throw new Error(error)
       })
     }
   }
