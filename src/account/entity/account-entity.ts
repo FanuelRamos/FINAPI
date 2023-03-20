@@ -1,5 +1,6 @@
 import BaseEntity from '../../@shared/domain/entity/base-entity'
 import Id from '../../@shared/domain/value-object/id-value-object'
+import AccountValidatorFactory from '../factory/account-validator-factory'
 
 interface AccountProps {
   id?: Id
@@ -38,6 +39,12 @@ export default class AccountEntity extends BaseEntity {
     this._phone = props.phone
     this._email = props.email
     this._password = props.password
+
+    this.validate()
+  }
+
+  validate (): void {
+    AccountValidatorFactory.create().validate(this)
   }
 
   get name (): string { return this._name }
