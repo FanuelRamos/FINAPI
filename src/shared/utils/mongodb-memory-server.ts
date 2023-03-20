@@ -19,3 +19,12 @@ export const dropDb = async (): Promise<void> => {
     await mongo.stop()
   }
 }
+
+export const dropCollections = async (): Promise<void> => {
+  if (mongo) {
+    const collections = await mongoose.connection.db.collections()
+    for (const collection of collections) {
+      await collection.drop()
+    }
+  }
+}
