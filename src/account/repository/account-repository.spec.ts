@@ -128,6 +128,49 @@ describe('AccountRepository unit tests', () => {
     expect(result).toBeFalsy()
   })
 
+  test('Should return an updated account if exists', async () => {
+    const accountRepository = makeSut()
+
+    await AccountModel.create({
+      id: fakeAccount.id,
+      name: fakeAccount.name,
+      burth: fakeAccount.burth,
+      country: fakeAccount.country,
+      city: fakeAccount.city,
+      address: fakeAccount.address,
+      postalCode: fakeAccount.postalCode,
+      phone: fakeAccount.phone,
+      email: fakeAccount.email,
+      createdAt: fakeAccount.createdAt,
+      updatedAt: fakeAccount.updatedAt
+    })
+
+    const updatedData = new Account({
+      id: fakeAccount.id,
+      name: 'Fanuel Ramos',
+      burth: new Date(),
+      country: 'Angola',
+      city: 'Luanda',
+      address: 'any_address',
+      postalCode: '0000',
+      phone: '+244939781000',
+      email: 'fanuelramos111@gmail.com'
+    })
+
+    const result = await accountRepository.update(updatedData)
+
+    expect(result).toBeTruthy()
+    expect(result?.id).toBeDefined()
+    expect(result?.name).toEqual(updatedData.name)
+    expect(result?.burth).toEqual(updatedData.burth)
+    expect(result?.country).toEqual(updatedData.country)
+    expect(result?.city).toEqual(updatedData.city)
+    expect(result?.address).toEqual(updatedData.address)
+    expect(result?.postalCode).toEqual(updatedData.postalCode)
+    expect(result?.phone).toEqual(updatedData.phone)
+    expect(result?.email).toEqual(updatedData.email)
+  })
+
   afterEach(async () => {
     await dropCollections()
   })
