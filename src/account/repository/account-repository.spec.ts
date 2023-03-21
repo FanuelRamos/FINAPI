@@ -40,6 +40,14 @@ describe('AccountRepository unit tests', () => {
     expect(result?.email).toEqual(fakeAccount.email)
   })
 
+  test('Should not return an account if id not exists', async () => {
+    const accountRepository = new AccountRepository()
+
+    const result = await accountRepository.findById('any_id')
+
+    expect(result).toBeFalsy()
+  })
+
   afterEach(async () => {
     await dropCollections()
   })
