@@ -81,6 +81,37 @@ describe('AccountRepository unit tests', () => {
     expect(result?.email).toEqual(fakeAccount.email)
   })
 
+  test('Should return an account if exists an account with given filters', async () => {
+    const accountRepository = makeSut()
+
+    await AccountModel.create({
+      id: fakeAccount.id,
+      name: fakeAccount.name,
+      burth: fakeAccount.burth,
+      country: fakeAccount.country,
+      city: fakeAccount.city,
+      address: fakeAccount.address,
+      postalCode: fakeAccount.postalCode,
+      phone: fakeAccount.phone,
+      email: fakeAccount.email,
+      createdAt: fakeAccount.createdAt,
+      updatedAt: fakeAccount.updatedAt
+    })
+
+    const result = await accountRepository.find({ name: fakeAccount.name })
+
+    expect(result).toBeTruthy()
+    expect(result?.id).toBeDefined()
+    expect(result?.name).toEqual(fakeAccount.name)
+    expect(result?.burth).toEqual(fakeAccount.burth)
+    expect(result?.country).toEqual(fakeAccount.country)
+    expect(result?.city).toEqual(fakeAccount.city)
+    expect(result?.address).toEqual(fakeAccount.address)
+    expect(result?.postalCode).toEqual(fakeAccount.postalCode)
+    expect(result?.phone).toEqual(fakeAccount.phone)
+    expect(result?.email).toEqual(fakeAccount.email)
+  })
+
   afterEach(async () => {
     await dropCollections()
   })
