@@ -120,6 +120,14 @@ describe('AccountRepository unit tests', () => {
     expect(result).toBeFalsy()
   })
 
+  test('Should not return an update an account if it do not exists', async () => {
+    const accountRepository = makeSut()
+
+    const result = await accountRepository.update(fakeAccount)
+
+    expect(result).toBeFalsy()
+  })
+
   afterEach(async () => {
     await dropCollections()
   })
