@@ -112,6 +112,14 @@ describe('AccountRepository unit tests', () => {
     expect(result?.email).toEqual(fakeAccount.email)
   })
 
+  test('Should not return an account if do not exists an account with given filters', async () => {
+    const accountRepository = makeSut()
+
+    const result = await accountRepository.find({ name: fakeAccount.name })
+
+    expect(result).toBeFalsy()
+  })
+
   afterEach(async () => {
     await dropCollections()
   })
