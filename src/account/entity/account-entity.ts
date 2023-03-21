@@ -1,5 +1,6 @@
 import BaseEntity from '../../@shared/domain/entity/base-entity'
 import Id from '../../@shared/domain/value-object/id-value-object'
+import Statement from '../../@shared/domain/value-object/statement-value-object'
 import AccountValidatorFactory from '../factory/account-validator-factory'
 
 interface AccountProps {
@@ -12,6 +13,7 @@ interface AccountProps {
   postalCode: string
   phone: string
   email: string
+  statement?: Statement[]
   createdAt?: Date
   updatedAt?: Date
 }
@@ -25,6 +27,7 @@ export default class AccountEntity extends BaseEntity {
   private _postalCode: string
   private _phone: string
   private _email: string
+  private _statement: Statement[]
 
   constructor (props: AccountProps) {
     super(props.id, props.createdAt, props.updatedAt)
