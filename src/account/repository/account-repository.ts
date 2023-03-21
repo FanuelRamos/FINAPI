@@ -40,7 +40,21 @@ export default class AccountRepository implements AccountGateway {
   }
 
   async find (filter: FilterQuery<unknown>): Promise<Account | null> {
-    throw new Error('Method not implemented.')
+    const account = await AccountModel.findOne(filter)
+    if (!account) return null
+    return new Account({
+      id: new Id(account.id),
+      name: account.name!,
+      burth: account.burth!,
+      country: account.country!,
+      city: account.city!,
+      address: account.address!,
+      postalCode: account.postalCode!,
+      phone: account.phone!,
+      email: account.email!,
+      createdAt: account.createdAt,
+      updatedAt: account.updatedAt
+    })
   }
 
   async update (account: Account): Promise<Account | null> {
