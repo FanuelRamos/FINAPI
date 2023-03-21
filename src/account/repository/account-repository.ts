@@ -58,6 +58,39 @@ export default class AccountRepository implements AccountGateway {
   }
 
   async update (account: Account): Promise<Account | null> {
-    throw new Error('Method not implemented.')
+    const filter = { id: account.id.id }
+
+    const accountData = await AccountModel.findOne(filter)
+    if (!accountData) return null
+
+    const updatedData = {
+      id: account.id,
+      name: account.name,
+      burth: account.burth,
+      country: account.country,
+      city: account.city,
+      address: account.address,
+      postalCode: account.postalCode,
+      phone: account.phone,
+      email: account.email,
+      updatedAt: account.updatedAt
+    }
+
+    const updatedAccout = await AccountModel.findOneAndUpdate(filter, updatedData, { new: true })
+    if (!updatedAccout) return null
+
+    return new Account({
+      id: new Id(updatedAccout.id),
+      name: updatedAccout.name!,
+      burth: updatedAccout.burth!,
+      country: updatedAccout.country!,
+      city: updatedAccout.city!,
+      address: updatedAccout.address!,
+      postalCode: updatedAccout.postalCode!,
+      phone: updatedAccout.phone!,
+      email: updatedAccout.email!,
+      createdAt: account.createdAt,
+      updatedAt: account.updatedAt
+    })
   }
 }
