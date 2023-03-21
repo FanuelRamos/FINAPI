@@ -14,17 +14,19 @@ const fakeAccount = new Account({
   email: 'any_email@mail.com'
 })
 
+const makeSut = (): AccountRepository => {
+  return new AccountRepository()
+}
+
 describe('AccountRepository unit tests', () => {
   beforeAll(async () => {
     await connectDb()
   })
 
   test('Should create a new account', async () => {
-    const accountRepository = new AccountRepository()
+    const accountRepository = makeSut()
 
     await accountRepository.add(fakeAccount)
-    fakeAccount.createdAt = new Date()
-    fakeAccount.updatedAt = new Date()
 
     const result = await AccountModel.findOne({ id: fakeAccount.id.id })
 
@@ -41,7 +43,7 @@ describe('AccountRepository unit tests', () => {
   })
 
   test('Should not return an account if id not exists', async () => {
-    const accountRepository = new AccountRepository()
+    const accountRepository = makeSut()
 
     const result = await accountRepository.findById('any_id')
 
