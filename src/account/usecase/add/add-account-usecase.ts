@@ -7,6 +7,11 @@ export default class AddAccountUseCase implements UseCaseInterface<AddAccountUse
   constructor (private _repository: AccountGateway) {}
 
   async execute (input: AddAccountUseCaseInputDTO): Promise<AddAccountUseCaseOutputDTO> {
+    const emailAlreadyExists = await this._repository.find({ email: input.email })
+    if (emailAlreadyExists) {
+      throw new Error('Email Already Exists')
+    }
+
     const account = new Account(input)
 
     await this._repository.add(account)
