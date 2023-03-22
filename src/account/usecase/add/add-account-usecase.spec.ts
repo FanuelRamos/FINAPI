@@ -1,7 +1,21 @@
+import Id from '../../../@shared/domain/value-object/id-value-object'
+import AccountEntity from '../../entity/account-entity'
 import AccountGateway from '../../gateway/account-gateway'
 import AddAccountUseCase from './add-account-usecase'
 
+const input = {
+  name: 'any_name',
+  burth: new Date(),
+  country: 'any_country',
+  city: 'any_city',
+  address: 'any_address',
+  postalCode: '0000',
+  phone: '+244939781000',
+  email: 'any_email@mail.com'
+}
+
 const expectedOutput = {
+  id: new Id().id,
   name: 'any_name',
   burth: new Date(),
   country: 'any_country',
@@ -42,17 +56,6 @@ describe('AddAccountUseCase unit test', () => {
   test('Should cretae a new account', async () => {
     const { sut, repository } = makeSut()
 
-    const input = {
-      name: 'any_name',
-      burth: new Date(),
-      country: 'any_country',
-      city: 'any_city',
-      address: 'any_address',
-      postalCode: '0000',
-      phone: '+244939781000',
-      email: 'any_email@mail.com'
-    }
-
     const output = await sut.execute(input)
 
     expect(repository.add).toHaveBeenCalledTimes(1)
@@ -64,5 +67,12 @@ describe('AddAccountUseCase unit test', () => {
     expect(output.postalCode).toBe(input.postalCode)
     expect(output.phone).toBe(input.phone)
     expect(output.email).toBe(input.email)
+  })
+
+  test('Should throw if an try to add an account with already existen email', async () => {
+    const { sut, repository } = makeSut()
+    repository.find = jest.fn().mockImplementationOnce(() => expectedOutput)
+    const promise = sut.execute(input)
+    await expect(promise).rejects.toThrowError('Email Already Exists')
   })
 })
