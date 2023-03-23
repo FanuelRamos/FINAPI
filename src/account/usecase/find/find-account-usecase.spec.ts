@@ -46,7 +46,7 @@ const makeSut = (): sutTypes => {
 }
 
 describe('FindAccountUsecase unit test', () => {
-  test('Should find an account', async () => {
+  test('Should be able to find an account', async () => {
     const { sut, repository } = makeSut()
     const output = await sut.execute(input)
 
@@ -60,5 +60,12 @@ describe('FindAccountUsecase unit test', () => {
     expect(output.postalCode).toEqual(expectedOutput.postalCode)
     expect(output.phone).toEqual(expectedOutput.phone)
     expect(output.email).toEqual(expectedOutput.email)
+  })
+
+  test('Should not be able to find an account', async () => {
+    const { sut, repository } = makeSut()
+    repository.find = jest.fn()
+    const promise = sut.execute(input)
+    await expect(promise).rejects.toThrowError('Account not found')
   })
 })
