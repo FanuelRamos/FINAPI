@@ -12,7 +12,6 @@ const expectedOutput = {
   postalCode: '0000',
   phone: '+244939781000',
   email: 'any_email@mail.com',
-  createdAt: new Date(),
   updatedAt: new Date()
 }
 
@@ -60,5 +59,33 @@ describe('UpdateAccountUseCase unit test', () => {
 
     const promise = sut.execute(input)
     await expect(promise).rejects.toThrowError('Could not update account')
+  })
+
+  test('Should update an account', async () => {
+    const { sut, repository } = makeSut()
+    const updatedExpected = expectedOutput
+    updatedExpected.name = 'Fanuel Ramos'
+    updatedExpected.email = 'test@test.com'
+    repository.update = jest.fn().mockReturnValue(Promise.resolve(updatedExpected))
+
+    const input = {
+      id: updatedExpected.id.id,
+      name: updatedExpected.name,
+      email: updatedExpected.email
+    }
+
+    const output = await sut.execute(input)
+
+    expect(repository.findById).toHaveBeenCalledTimes(1)
+    expect(repository.update).toHaveBeenCalledTimes(1)
+    expect(output.id).toBeTruthy()
+    expect(output.name).toBe(updatedExpected.name)
+    expect(output.burth).toEqual(updatedExpected.burth)
+    expect(output.country).toEqual(updatedExpected.country)
+    expect(output.city).toEqual(updatedExpected.city)
+    expect(output.address).toEqual(updatedExpected.address)
+    expect(output.postalCode).toEqual(updatedExpected.postalCode)
+    expect(output.phone).toEqual(updatedExpected.phone)
+    expect(output.email).toBe(updatedExpected.email)
   })
 })
