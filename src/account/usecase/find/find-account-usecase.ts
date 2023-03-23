@@ -7,19 +7,22 @@ export default class FindAccountUseCase implements UseCaseInterface<FindAccountU
 
   async execute (input: FindAccountUseCaseInputDTO): Promise<FindAccountUseCaseOutputDTO> {
     const account = await this._repository.find(input.filter)
+    if (!account) {
+      throw new Error('Account not found')
+    }
 
     return {
-      id: account!.id.id,
-      name: account!.name,
-      burth: account!.burth,
-      country: account!.country,
-      city: account!.city,
-      address: account!.address,
-      postalCode: account!.postalCode,
-      phone: account!.phone,
-      email: account!.email,
-      createdAt: account!.createdAt,
-      updatedAt: account!.updatedAt
+      id: account.id.id,
+      name: account.name,
+      burth: account.burth,
+      country: account.country,
+      city: account.city,
+      address: account.address,
+      postalCode: account.postalCode,
+      phone: account.phone,
+      email: account.email,
+      createdAt: account.createdAt,
+      updatedAt: account.updatedAt
     }
   }
 }
