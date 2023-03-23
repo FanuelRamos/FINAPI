@@ -8,7 +8,7 @@ export interface AddStatementUseCaseInputDTO {
   type: string
 }
 
-export default interface AccountGateway {
+export default interface StatementGateway {
   addStatement(input: AddStatementUseCaseInputDTO): Promise<Statement>
   findStatement(filter: FilterQuery<unknown>): Promise<Statement[] | null>
 }
