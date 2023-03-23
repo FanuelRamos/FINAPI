@@ -51,4 +51,14 @@ describe('UpdateAccountUseCase unit test', () => {
     const promise = sut.execute(input)
     await expect(promise).rejects.toThrowError('Account not found')
   })
+
+  test('Should not update an account', async () => {
+    const { sut } = makeSut()
+    const input = {
+      id: expectedOutput.id.id
+    }
+
+    const promise = sut.execute(input)
+    await expect(promise).rejects.toThrowError('Could not update account')
+  })
 })
