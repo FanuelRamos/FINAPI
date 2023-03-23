@@ -5,7 +5,7 @@ import { UpdateAccountUseCaseInputDTO, UpdateAccountUseCaseOutputDTO } from './u
 export default class UpdateAccountUseCase implements UseCaseInterface<UpdateAccountUseCaseInputDTO, UpdateAccountUseCaseOutputDTO> {
   constructor (private _repository: AccountGateway) {}
 
-  async execute (input: UpdateAccountUseCaseInputDTO): Promise<any> {
+  async execute (input: UpdateAccountUseCaseInputDTO): Promise<UpdateAccountUseCaseOutputDTO> {
     const account = await this._repository.findById(input.id)
     if (!account) {
       throw new Error('Account not found')
@@ -23,6 +23,19 @@ export default class UpdateAccountUseCase implements UseCaseInterface<UpdateAcco
     const updatedAccount = await this._repository.update(account)
     if (!updatedAccount) {
       throw new Error('Could not update account')
+    }
+
+    return {
+      id: updatedAccount.id.id,
+      name: updatedAccount.name,
+      burth: updatedAccount.burth,
+      country: updatedAccount.country,
+      city: updatedAccount.city,
+      address: updatedAccount.address,
+      postalCode: updatedAccount.postalCode,
+      phone: updatedAccount.phone,
+      email: updatedAccount.email,
+      updatedAt: updatedAccount.updatedAt
     }
   }
 }
