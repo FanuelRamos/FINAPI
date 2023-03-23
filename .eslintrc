@@ -17,6 +17,7 @@
     "@typescript-eslint/prefer-readonly": "off",
     "@typescript-eslint/no-empty-interface": "off",
     "@typescript-eslint/consistent-type-definitions": "off",
-    "@typescript-eslint/no-non-null-assertion": "off"
+    "@typescript-eslint/no-non-null-assertion": "off",
+    "@typescript-eslint/consistent-type-exports": "off"
   }
 }
