@@ -1,8 +1,9 @@
 import Id from '../../../@shared/domain/value-object/id-value-object'
-import StatementGateway from '../../gateway/statement-gateway'
+import Statement from '../../../@shared/domain/value-object/statement-value-object'
+import StatementGateway, { AddStatementUseCaseInputDTO } from '../../gateway/statement-gateway'
 import AddStatementUseCase from './add-statement-usecase'
 
-const input = {
+const input: AddStatementUseCaseInputDTO = {
   account: new Id().id,
   transaction: new Id().id,
   amount: 25000,
@@ -44,5 +45,16 @@ describe('AddStatementUseCase unit test', () => {
     const promise = sut.execute(input)
 
     await expect(promise).rejects.toThrowError('Could not add statement')
+  })
+
+  test('Should be able to add a Statement', async () => {
+    const { sut, repository } = makeSut()
+    repository.addStatement = jest.fn().mockReturnValue(Promise.resolve(expectedOutput))
+
+    const output = await sut.execute(input)
+    expect(repository.addStatement).toHaveBeenCalledTimes(1)
+    expect(output.transaction).toBe(expectedOutput.transaction.id)
+    expect(output.amount).toBe(expectedOutput.amount)
+    expect(output.type).toBe(expectedOutput.type)
   })
 })
