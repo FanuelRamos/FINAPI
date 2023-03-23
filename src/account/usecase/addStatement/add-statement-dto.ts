@@ -1,12 +1,12 @@
 export interface AddStatementUseCaseInputDTO {
   account: string
-  trasaction: string
+  transaction: string
   amount: number
   type: string
 }
 
 export interface AddStatementUseCaseOutputDTO {
-  trasaction: string
+  transaction: string
   amount: number
   type: string
 }
