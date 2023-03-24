@@ -222,6 +222,38 @@ describe('AccountRepository unit tests', () => {
     expect(result?.statement[0].type).toBeFalsy()
   })
 
+  test('Should create a new statement', async () => {
+    const accountRepository = makeSut()
+
+    await AccountModel.create({
+      id: fakeAccount.id,
+      name: fakeAccount.name,
+      burth: fakeAccount.burth,
+      country: fakeAccount.country,
+      city: fakeAccount.city,
+      address: fakeAccount.address,
+      postalCode: fakeAccount.postalCode,
+      phone: fakeAccount.phone,
+      email: fakeAccount.email,
+      createdAt: fakeAccount.createdAt,
+      updatedAt: fakeAccount.updatedAt
+    })
+
+    fakeStatement.account = fakeAccount.id.id
+    await accountRepository.addStatement(fakeStatement)
+    fakeStatement.transaction = new Id().id
+    fakeStatement.type = 'debit'
+    await accountRepository.addStatement(fakeStatement)
+
+    const statement = await accountRepository.findStatement(fakeAccount.id.id)
+
+    expect(statement).toBeTruthy()
+    expect(statement![0].transaction).toBeDefined()
+    expect(statement![1].transaction).toBeDefined()
+    expect(statement![0].type).toBe('credit')
+    expect(statement![1].type).toBe('debit')
+  })
+
   afterEach(async () => {
     await dropCollections()
   })
