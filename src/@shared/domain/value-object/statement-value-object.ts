@@ -2,7 +2,7 @@ import Id from './id-value-object'
 import ValueObjectInterface from './value-object-interface'
 
 type StatementProps = {
-  transaction: Id
+  transaction: string
   amount: number
   type: string
 }
@@ -13,7 +13,7 @@ export default class Statement implements ValueObjectInterface {
   private _type: string
 
   constructor (props: StatementProps) {
-    this._transaction = props.transaction
+    this._transaction = new Id(props.transaction)
     this._amount = props.amount
     this._type = props.type
   }

@@ -2,7 +2,7 @@ import mongoose from 'mongoose'
 const { Schema } = mongoose
 
 const statementSchema = new Schema({
-  id: String,
+  transaction: String,
   amount: Number,
   type: String
 })

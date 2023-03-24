@@ -10,5 +10,5 @@ export interface AddStatementUseCaseInputDTO {
 
 export default interface StatementGateway {
   addStatement(input: AddStatementUseCaseInputDTO): Promise<Statement | null>
-  findStatement(filter: FilterQuery<unknown>): Promise<Statement[] | null>
+  findStatement(id: string): Promise<Statement[] | null>
 }
