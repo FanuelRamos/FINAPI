@@ -3,8 +3,10 @@ import Account from '../entity/account-entity'
 import AccountGateway from '../gateway/account-gateway'
 import { AccountModel } from './account-model'
 import Id from '../../@shared/domain/value-object/id-value-object'
+import StatementGateway, { AddStatementUseCaseInputDTO } from '../gateway/statement-gateway'
+import Statement from '../../@shared/domain/value-object/statement-value-object'
 
-export default class AccountRepository implements AccountGateway {
+export default class AccountRepository implements AccountGateway, StatementGateway {
   async add (account: Account): Promise<void> {
     await AccountModel.create({
       id: account.id,
@@ -92,5 +94,35 @@ export default class AccountRepository implements AccountGateway {
       createdAt: account.createdAt,
       updatedAt: account.updatedAt
     })
+  }
+
+  async addStatement (input: AddStatementUseCaseInputDTO): Promise<Statement | null> {
+    const filter = { id: input.account }
+    const account = await AccountModel.findOne(filter)
+
+    if (!account) return null
+    const update = {
+      $push:
+        {
+          statement: {
+            id: input.transaction,
+            amount: input.amount,
+            type: input.type
+          }
+        }
+    }
+
+    const accountUpdated = await AccountModel.findOneAndUpdate(filter, update, { new: true, useFindAndModify: false })
+    if (!accountUpdated) return null
+
+    return new Statement({
+      transaction: new Id(input.transaction),
+      amount: input.amount,
+      type: input.type
+    })
+  }
+
+  async findStatement (filter: FilterQuery<unknown>): Promise<Statement[] | null> {
+    throw new Error('Method not implemented.')
   }
 }
