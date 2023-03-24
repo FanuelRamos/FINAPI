@@ -1,6 +1,12 @@
 import mongoose from 'mongoose'
 const { Schema } = mongoose
 
+const statementSchema = new Schema({
+  id: String,
+  amount: Number,
+  type: String
+})
+
 const accountSchema = new Schema({
   id: String,
   name: String,
@@ -11,11 +17,7 @@ const accountSchema = new Schema({
   postalCode: String,
   phone: String,
   email: String,
-  statement: [{
-    id: String,
-    amount: Number,
-    type: String
-  }],
+  statement: [statementSchema],
   createdAt: Date,
   updatedAt: Date
 })
