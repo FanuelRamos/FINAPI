@@ -1,3 +1,4 @@
+import Id from '../../@shared/domain/value-object/id-value-object'
 import { connectDb, dropCollections, dropDb } from '../../@shared/utils/mongodb-memory-server'
 import Account from '../entity/account-entity'
 import { AccountModel } from './account-model'
@@ -13,6 +14,13 @@ const fakeAccount = new Account({
   phone: '+244939781000',
   email: 'any_email@mail.com'
 })
+
+const fakeStatement = {
+  account: new Id().id,
+  transaction: new Id().id,
+  amount: 25000,
+  type: 'credit'
+}
 
 const makeSut = (): AccountRepository => {
   return new AccountRepository()
@@ -169,6 +177,35 @@ describe('AccountRepository unit tests', () => {
     expect(result?.postalCode).toEqual(updatedData.postalCode)
     expect(result?.phone).toEqual(updatedData.phone)
     expect(result?.email).toEqual(updatedData.email)
+  })
+
+  test('Should create a new statement', async () => {
+    const accountRepository = makeSut()
+
+    await AccountModel.create({
+      id: fakeAccount.id,
+      name: fakeAccount.name,
+      burth: fakeAccount.burth,
+      country: fakeAccount.country,
+      city: fakeAccount.city,
+      address: fakeAccount.address,
+      postalCode: fakeAccount.postalCode,
+      phone: fakeAccount.phone,
+      email: fakeAccount.email,
+      createdAt: fakeAccount.createdAt,
+      updatedAt: fakeAccount.updatedAt
+    })
+
+    fakeStatement.account = fakeAccount.id.id
+    await accountRepository.addStatement(fakeStatement)
+
+    const result = await AccountModel.findOne({ id: fakeAccount.id.id })
+
+    expect(result).toBeTruthy()
+    expect(result?.id).toBeDefined()
+    expect(result?.statement[0].id).toBeDefined()
+    expect(result?.statement[0].amount).toBe(fakeStatement.amount)
+    expect(result?.statement[0].type).toBe(fakeStatement.type)
   })
 
   afterEach(async () => {
