@@ -208,6 +208,20 @@ describe('AccountRepository unit tests', () => {
     expect(result?.statement[0].type).toBe(fakeStatement.type)
   })
 
+  test('Should not be able to create a new statement', async () => {
+    const accountRepository = makeSut()
+
+    fakeStatement.account = fakeAccount.id.id
+    await accountRepository.addStatement(fakeStatement)
+
+    const result = await AccountModel.findOne({ id: fakeAccount.id.id })
+
+    expect(result).toBeFalsy()
+    expect(result?.statement[0].id).toBeFalsy()
+    expect(result?.statement[0].amount).toBeFalsy()
+    expect(result?.statement[0].type).toBeFalsy()
+  })
+
   afterEach(async () => {
     await dropCollections()
   })
