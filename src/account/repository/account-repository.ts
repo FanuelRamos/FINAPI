@@ -105,7 +105,7 @@ export default class AccountRepository implements AccountGateway, StatementGatew
       $push:
         {
           statement: {
-            id: input.transaction,
+            transaction: input.transaction,
             amount: input.amount,
             type: input.type
           }
@@ -116,13 +116,16 @@ export default class AccountRepository implements AccountGateway, StatementGatew
     if (!accountUpdated) return null
 
     return new Statement({
-      transaction: new Id(input.transaction),
+      transaction: input.transaction,
       amount: input.amount,
       type: input.type
     })
   }
 
-  async findStatement (filter: FilterQuery<unknown>): Promise<Statement[] | null> {
-    throw new Error('Method not implemented.')
+  async findStatement (id: string): Promise<Statement[] | null> {
+    const account = await AccountModel.findOne({ id })
+    if (!account) return null
+
+    return account.statement.toObject()
   }
 }
