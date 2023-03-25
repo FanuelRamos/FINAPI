@@ -50,4 +50,12 @@ describe('FindStatementUseCase unit test', () => {
     expect(output[0].type).toBe(expectedOutput[0].type)
     expect(output[1].type).toBe(expectedOutput[1].type)
   })
+
+  test('Should not be able to find statement', async () => {
+    const { sut, repository } = makesut()
+    repository.findStatement = jest.fn()
+    const id = new Id().id
+    const promise = sut.execute({ id })
+    await expect(promise).rejects.toThrowError('Could not find statement')
+  })
 })
