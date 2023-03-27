@@ -85,6 +85,53 @@ describe('AccountFacade unit test', () => {
     expect(output.email).toEqual(fakeAccount.email)
   })
 
+  test('Should be able to update an account', async () => {
+    const accountFacade = makeSut()
+
+    const fakeAccount = new Account({
+      name: 'any_name',
+      burth: new Date(),
+      country: 'any_country',
+      city: 'any_city',
+      address: 'any_address',
+      postalCode: '0000',
+      phone: '+244939781000',
+      email: 'any_email@mail.com'
+    })
+
+    await AccountModel.create({
+      id: fakeAccount.id,
+      name: fakeAccount.name,
+      burth: fakeAccount.burth,
+      country: fakeAccount.country,
+      city: fakeAccount.city,
+      address: fakeAccount.address,
+      postalCode: fakeAccount.postalCode,
+      phone: fakeAccount.phone,
+      email: fakeAccount.email,
+      createdAt: fakeAccount.createdAt,
+      updatedAt: fakeAccount.updatedAt
+    })
+
+    const input = {
+      id: fakeAccount.id.id,
+      name: 'Fanuel Ramos',
+      email: 'fakeaccount@finapi.com'
+    }
+
+    const output = await accountFacade.update(input)
+
+    expect(output.id).toBeTruthy()
+    expect(output.name).toBe(input.name)
+    expect(output.burth).toEqual(fakeAccount.burth)
+    expect(output.country).toEqual(fakeAccount.country)
+    expect(output.city).toEqual(fakeAccount.city)
+    expect(output.address).toEqual(fakeAccount.address)
+    expect(output.postalCode).toEqual(fakeAccount.postalCode)
+    expect(output.phone).toEqual(fakeAccount.phone)
+    expect(output.email).toBe(input.email)
+  })
+
   afterEach(async () => {
     await dropCollections()
   })
