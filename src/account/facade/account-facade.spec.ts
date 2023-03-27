@@ -132,6 +132,52 @@ describe('AccountFacade unit test', () => {
     expect(output.email).toBe(input.email)
   })
 
+  test('Should create a new statement', async () => {
+    const accountFacade = makeSut()
+
+    const fakeAccount = new Account({
+      name: 'any_name',
+      burth: new Date(),
+      country: 'any_country',
+      city: 'any_city',
+      address: 'any_address',
+      postalCode: '0000',
+      phone: '+244939781000',
+      email: 'any_email@mail.com'
+    })
+
+    await AccountModel.create({
+      id: fakeAccount.id,
+      name: fakeAccount.name,
+      burth: fakeAccount.burth,
+      country: fakeAccount.country,
+      city: fakeAccount.city,
+      address: fakeAccount.address,
+      postalCode: fakeAccount.postalCode,
+      phone: fakeAccount.phone,
+      email: fakeAccount.email,
+      createdAt: fakeAccount.createdAt,
+      updatedAt: fakeAccount.updatedAt
+    })
+
+    const fakeStatement = {
+      account: fakeAccount.id.id,
+      transaction: new Id().id,
+      amount: 25000,
+      type: 'credit'
+    }
+
+    await accountFacade.addStatement(fakeStatement)
+
+    const output = await AccountModel.findOne({ id: fakeAccount.id.id })
+
+    expect(output).toBeTruthy()
+    expect(output?.id).toBeDefined()
+    expect(output?.statement[0].id).toBeDefined()
+    expect(output?.statement[0].amount).toBe(fakeStatement.amount)
+    expect(output?.statement[0].type).toBe(fakeStatement.type)
+  })
+
   afterEach(async () => {
     await dropCollections()
   })
