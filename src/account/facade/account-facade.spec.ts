@@ -5,6 +5,17 @@ import AccountFacadeFactory from '../factory/account-facade-factory'
 import { AccountModel } from '../repository/account-model'
 import { AccountFacadeInterface } from './account-facade-interface'
 
+const fakeAccount = new Account({
+  name: 'any_name',
+  burth: new Date(),
+  country: 'any_country',
+  city: 'any_city',
+  address: 'any_address',
+  postalCode: '0000',
+  phone: '+244939781000',
+  email: 'any_email@mail.com'
+})
+
 const makeSut = (): AccountFacadeInterface => {
   return AccountFacadeFactory.create()
 }
@@ -42,17 +53,6 @@ describe('AccountFacade unit test', () => {
   test('Should be able to find an account', async () => {
     const accountFacade = makeSut()
 
-    const fakeAccount = new Account({
-      name: 'any_name',
-      burth: new Date(),
-      country: 'any_country',
-      city: 'any_city',
-      address: 'any_address',
-      postalCode: '0000',
-      phone: '+244939781000',
-      email: 'any_email@mail.com'
-    })
-
     await AccountModel.create({
       id: fakeAccount.id,
       name: fakeAccount.name,
@@ -87,17 +87,6 @@ describe('AccountFacade unit test', () => {
 
   test('Should be able to update an account', async () => {
     const accountFacade = makeSut()
-
-    const fakeAccount = new Account({
-      name: 'any_name',
-      burth: new Date(),
-      country: 'any_country',
-      city: 'any_city',
-      address: 'any_address',
-      postalCode: '0000',
-      phone: '+244939781000',
-      email: 'any_email@mail.com'
-    })
 
     await AccountModel.create({
       id: fakeAccount.id,
@@ -135,17 +124,6 @@ describe('AccountFacade unit test', () => {
   test('Should create a new statement', async () => {
     const accountFacade = makeSut()
 
-    const fakeAccount = new Account({
-      name: 'any_name',
-      burth: new Date(),
-      country: 'any_country',
-      city: 'any_city',
-      address: 'any_address',
-      postalCode: '0000',
-      phone: '+244939781000',
-      email: 'any_email@mail.com'
-    })
-
     await AccountModel.create({
       id: fakeAccount.id,
       name: fakeAccount.name,
@@ -180,17 +158,6 @@ describe('AccountFacade unit test', () => {
 
   test('Should find statements', async () => {
     const accountFacade = makeSut()
-
-    const fakeAccount = new Account({
-      name: 'any_name',
-      burth: new Date(),
-      country: 'any_country',
-      city: 'any_city',
-      address: 'any_address',
-      postalCode: '0000',
-      phone: '+244939781000',
-      email: 'any_email@mail.com'
-    })
 
     await AccountModel.create({
       id: fakeAccount.id,
