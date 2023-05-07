@@ -1,5 +1,5 @@
 import Id from '../../../@shared/domain/value-object/id-value-object'
-import StatementGateway from '../../gateway/statement-gateway'
+import AccountGateway from '../../gateway/account-gateway'
 import FindStatementUseCase from './find-statement-usecase'
 
 const expectedOutput = [
@@ -15,15 +15,19 @@ const expectedOutput = [
   }
 ]
 
-const MockRepository = (): StatementGateway => {
+const MockRepository = (): AccountGateway => {
   return {
+    find: jest.fn(),
+    findById: jest.fn(),
+    add: jest.fn().mockReturnValue(Promise.resolve(expectedOutput)),
+    update: jest.fn(),
     findStatement: jest.fn().mockReturnValue(Promise.resolve(expectedOutput)),
     addStatement: jest.fn()
   }
 }
 
 type sutTypes = {
-  repository: StatementGateway
+  repository: AccountGateway
   sut: FindStatementUseCase
 }
 

@@ -1,9 +1,9 @@
 import UseCaseInterface from '../../../@shared/usecase/usecase-interface'
-import StatementGateway from '../../gateway/statement-gateway'
+import AccountGateway from '../../gateway/account-gateway'
 import { AddStatementUseCaseInputDTO, AddStatementUseCaseOutputDTO } from './add-statement-dto'
 
 export default class AddStatementUseCase implements UseCaseInterface<AddStatementUseCaseInputDTO, AddStatementUseCaseOutputDTO> {
-  constructor (private _repository: StatementGateway) {}
+  constructor (private _repository: AccountGateway) {}
 
   async execute (input: AddStatementUseCaseInputDTO): Promise<AddStatementUseCaseOutputDTO> {
     const statement = await this._repository.addStatement(input)

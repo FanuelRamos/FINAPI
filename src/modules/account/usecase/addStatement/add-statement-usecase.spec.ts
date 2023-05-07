@@ -1,6 +1,6 @@
 import Id from '../../../@shared/domain/value-object/id-value-object'
-import Statement from '../../../@shared/domain/value-object/statement-value-object'
-import StatementGateway, { AddStatementUseCaseInputDTO } from '../../gateway/statement-gateway'
+import AccountGateway from '../../gateway/account-gateway'
+import { AddStatementUseCaseInputDTO } from './add-statement-dto'
 import AddStatementUseCase from './add-statement-usecase'
 
 const input: AddStatementUseCaseInputDTO = {
@@ -16,15 +16,19 @@ const expectedOutput = {
   type: 'credit'
 }
 
-const MockRepository = (): StatementGateway => {
+const MockRepository = (): AccountGateway => {
   return {
+    find: jest.fn(),
+    findById: jest.fn(),
+    add: jest.fn().mockReturnValue(Promise.resolve(expectedOutput)),
+    update: jest.fn(),
     findStatement: jest.fn(),
     addStatement: jest.fn().mockReturnValue(Promise.resolve(expectedOutput))
   }
 }
 
 type sutTypes = {
-  repository: StatementGateway
+  repository: AccountGateway
   sut: AddStatementUseCase
 }
 

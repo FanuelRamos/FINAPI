@@ -6,4 +6,4 @@ export interface AddStatementUseCaseOutputDTO {
   type: string
 }
 
-export { AddStatementUseCaseInputDTO } from '../../gateway/statement-gateway'
+export { AddStatementUseCaseInputDTO } from '../../gateway/account-gateway'

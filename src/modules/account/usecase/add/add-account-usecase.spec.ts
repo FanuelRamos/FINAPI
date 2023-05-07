@@ -1,5 +1,4 @@
 import Id from '../../../@shared/domain/value-object/id-value-object'
-import AccountEntity from '../../entity/account-entity'
 import AccountGateway from '../../gateway/account-gateway'
 import AddAccountUseCase from './add-account-usecase'
 
@@ -33,7 +32,9 @@ const MockRepository = (): AccountGateway => {
     find: jest.fn(),
     findById: jest.fn(),
     add: jest.fn().mockReturnValue(Promise.resolve(expectedOutput)),
-    update: jest.fn()
+    update: jest.fn(),
+    findStatement: jest.fn(),
+    addStatement: jest.fn()
   }
 }
 

@@ -1,12 +1,11 @@
 import { FilterQuery } from 'mongoose'
 import Account from '../entity/account-entity'
-import AccountGateway from '../gateway/account-gateway'
+import AccountGateway, { AddStatementUseCaseInputDTO } from '../gateway/account-gateway'
 import { AccountModel } from './account-model'
 import Id from '../../@shared/domain/value-object/id-value-object'
-import StatementGateway, { AddStatementUseCaseInputDTO } from '../gateway/statement-gateway'
 import Statement from '../../@shared/domain/value-object/statement-value-object'
 
-export default class AccountRepository implements AccountGateway, StatementGateway {
+export default class AccountRepository implements AccountGateway {
   async add (account: Account): Promise<void> {
     await AccountModel.create({
       id: account.id,
