@@ -19,7 +19,7 @@ const MockRepository = (): AccountGateway => {
   return {
     find: jest.fn(),
     findById: jest.fn(),
-    add: jest.fn().mockReturnValue(Promise.resolve(expectedOutput)),
+    add: jest.fn(),
     update: jest.fn(),
     findStatement: jest.fn().mockReturnValue(Promise.resolve(expectedOutput)),
     addStatement: jest.fn()
