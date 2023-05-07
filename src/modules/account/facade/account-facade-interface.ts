@@ -73,6 +73,7 @@ export interface AddStatementFacadeOutputDTO {
   transaction: string
   amount: number
   type: string
+  createdAt: Date
 }
 
 export interface AddStatementFacadeInputDTO {

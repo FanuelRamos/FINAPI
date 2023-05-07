@@ -14,7 +14,8 @@ export default class AddStatementUseCase implements UseCaseInterface<AddStatemen
     return {
       transaction: statement.transaction.id,
       amount: statement.amount,
-      type: statement.type
+      type: statement.type,
+      createdAt: statement.createdAt
     }
   }
 }

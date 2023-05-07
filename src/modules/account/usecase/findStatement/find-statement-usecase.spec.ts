@@ -6,12 +6,14 @@ const expectedOutput = [
   {
     transaction: new Id().id,
     amount: 25000,
-    type: 'credit'
+    type: 'credit',
+    createdAt: new Date()
   },
   {
     transaction: new Id().id,
     amount: 5000,
-    type: 'debit'
+    type: 'debit',
+    createdAt: new Date()
   }
 ]
 
@@ -53,6 +55,8 @@ describe('FindStatementUseCase unit test', () => {
     expect(output[1].amount).toBe(expectedOutput[1].amount)
     expect(output[0].type).toBe(expectedOutput[0].type)
     expect(output[1].type).toBe(expectedOutput[1].type)
+    expect(output[0].createdAt).toBe(expectedOutput[0].createdAt)
+    expect(output[1].createdAt).toBe(expectedOutput[1].createdAt)
   })
 
   test('Should not be able to find statement', async () => {
