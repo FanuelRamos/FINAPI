@@ -15,6 +15,10 @@ const expectedOutput = [
   }
 ]
 
+const input = {
+  id: new Id().id
+}
+
 const MockRepository = (): AccountGateway => {
   return {
     find: jest.fn(),
@@ -44,11 +48,14 @@ describe('GetBalanceUseCase unit tests', () => {
   test('Shold not be able to get balance of an not existing account', async () => {
     const { sut, repository } = makesut()
     repository.findStatement = jest.fn()
-    const input = {
-      id: new Id().id
-    }
-
     const promise = sut.execute(input)
     await expect(promise).rejects.toThrowError('Statement not found')
+  })
+
+  test('Should be able to get balance', async () => {
+    const { sut } = makesut()
+    const balance = await sut.execute(input)
+    const expectedBalance = expectedOutput[0].amount - expectedOutput[1].amount
+    expect(balance.balance).toBe(expectedBalance)
   })
 })
