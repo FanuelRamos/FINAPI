@@ -19,6 +19,16 @@ describe('Transactions tests', () => {
       recipientAccount: new Id().id,
       recepientName: 'Any_Recepient_Name',
       amount: 90
-    })).toThrow()
+    })).toThrow('A minimum of 100 is required to make a transaction')
+  })
+
+  test('Should throw if amount is bigger than 250000', () => {
+    expect(() => new Transaction({
+      senderAccount: new Id().id,
+      senderName: 'Any_Sender_Name',
+      recipientAccount: new Id().id,
+      recepientName: 'Any_Recepient_Name',
+      amount: 251000
+    })).toThrow('A maximum of 250.000 is allowed to make a transaction')
   })
 })
