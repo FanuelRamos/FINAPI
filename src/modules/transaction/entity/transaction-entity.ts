@@ -1,5 +1,6 @@
 import BaseEntity from '../../@shared/domain/entity/base-entity'
 import Id from '../../@shared/domain/value-object/id-value-object'
+import TransactionValidatorFactory from '../factory/transaction-validator-factory'
 
 interface TransactionProps {
   id?: Id
@@ -8,8 +9,8 @@ interface TransactionProps {
   recipientAccount: string
   recepientName: string
   amount: number
-  createdAt: Date
-  updatedAt: Date
+  createdAt?: Date
+  updatedAt?: Date
 }
 
 export default class TransactionEntity extends BaseEntity {
@@ -26,6 +27,12 @@ export default class TransactionEntity extends BaseEntity {
     this._recipientAccount = props.recipientAccount
     this._recepientName = props.recepientName
     this._amount = props.amount
+
+    this.validate()
+  }
+
+  validate (): void {
+    TransactionValidatorFactory.create().validate(this)
   }
 
   get senderAccount (): string { return this._senderAccount }
