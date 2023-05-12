@@ -4,7 +4,7 @@ export interface AddTransactionUseCaseInputDTO {
   senderAccount: string
   senderName: string
   recipientAccount: string
-  recepientName: string
+  recipientName: string
   amount: number
 }
 
@@ -13,7 +13,7 @@ export interface AddTransactionUseCaseOutputDTO {
   senderAccount: string
   senderName: string
   recipientAccount: string
-  recepientName: string
+  recipientName: string
   amount: number
   createdAt: Date
   updatedAt: Date

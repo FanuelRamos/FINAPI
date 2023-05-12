@@ -11,7 +11,7 @@ export default class TransactionYupValidator implements ValidatorInterface<Trans
           senderAccount: yup.string().required('Sender Account is required'),
           senderName: yup.string().required('Sender Name is required'),
           recipientAccount: yup.string().required('Recipient Account is required'),
-          recepientName: yup.string().required('Recipient Name is required'),
+          recipientName: yup.string().required('Recipient Name is required'),
           amount: yup.number()
             .min(100, 'A minimum of 100 is required to make a transaction')
             .max(250000, 'A maximum of 250.000 is allowed to make a transaction')
@@ -22,7 +22,7 @@ export default class TransactionYupValidator implements ValidatorInterface<Trans
             senderAccount: entity.senderAccount,
             senderName: entity.senderName,
             recipientAccount: entity.recipientAccount,
-            recepientName: entity.recipientName,
+            recipientName: entity.recipientName,
             amount: entity.amount
           },
           {

@@ -7,7 +7,7 @@ interface TransactionProps {
   senderAccount: string
   senderName: string
   recipientAccount: string
-  recepientName: string
+  recipientName: string
   amount: number
   createdAt?: Date
   updatedAt?: Date
@@ -17,7 +17,7 @@ export default class TransactionEntity extends BaseEntity {
   private _senderAccount: string
   private _senderName: string
   private _recipientAccount: string
-  private _recepientName: string
+  private _recipientName: string
   private _amount: number
 
   constructor (props: TransactionProps) {
@@ -25,7 +25,7 @@ export default class TransactionEntity extends BaseEntity {
     this._senderAccount = props.senderAccount
     this._senderName = props.senderName
     this._recipientAccount = props.recipientAccount
-    this._recepientName = props.recepientName
+    this._recipientName = props.recipientName
     this._amount = props.amount
 
     this.validate()
@@ -38,6 +38,6 @@ export default class TransactionEntity extends BaseEntity {
   get senderAccount (): string { return this._senderAccount }
   get senderName (): string { return this._senderName }
   get recipientAccount (): string { return this._recipientAccount }
-  get recipientName (): string { return this._recepientName }
+  get recipientName (): string { return this._recipientName }
   get amount (): number { return this._amount }
 }

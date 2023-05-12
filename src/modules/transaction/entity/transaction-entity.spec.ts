@@ -7,7 +7,7 @@ describe('Transactions tests', () => {
       senderAccount: '',
       senderName: '',
       recipientAccount: '',
-      recepientName: '',
+      recipientName: '',
       amount: 100
     })).toThrow()
   })
@@ -17,7 +17,7 @@ describe('Transactions tests', () => {
       senderAccount: new Id().id,
       senderName: 'Any_Sender_Name',
       recipientAccount: new Id().id,
-      recepientName: 'Any_Recepient_Name',
+      recipientName: 'Any_Recepient_Name',
       amount: 90
     })).toThrow('A minimum of 100 is required to make a transaction')
   })
@@ -27,7 +27,7 @@ describe('Transactions tests', () => {
       senderAccount: new Id().id,
       senderName: 'Any_Sender_Name',
       recipientAccount: new Id().id,
-      recepientName: 'Any_Recepient_Name',
+      recipientName: 'Any_Recepient_Name',
       amount: 251000
     })).toThrow('A maximum of 250.000 is allowed to make a transaction')
   })

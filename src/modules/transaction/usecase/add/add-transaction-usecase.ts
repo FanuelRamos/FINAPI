@@ -41,7 +41,7 @@ export default class AddTransactionUseCase implements UseCaseInterface<AddTransa
       senderAccount: transaction.senderAccount,
       senderName: transaction.senderName,
       recipientAccount: transaction.recipientAccount,
-      recepientName: transaction.recipientName,
+      recipientName: transaction.recipientName,
       amount: transaction.amount,
       createdAt: transaction.createdAt,
       updatedAt: transaction.updatedAt
