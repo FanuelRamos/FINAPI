@@ -58,6 +58,19 @@ const makeSut = (): sutTypes => {
 }
 
 describe('AddTransactionUseCase tests', () => {
+  test('Should return a transaction on success', async () => {
+    const { sut } = makeSut()
+    const output = await sut.execute(input)
+    expect(output).toBeTruthy()
+    expect(output.id).toBeDefined()
+    expect(output.senderAccount).toBe(input.senderAccount)
+    expect(output.senderName).toBe(input.senderName)
+    expect(output.recipientAccount).toBe(input.recipientAccount)
+    expect(output.recipientName).toBe(input.recipientName)
+    expect(output.amount).toBe(input.amount)
+    expect(output.createdAt).toBeDefined()
+  })
+
   test('Should throw if senderAccount or recipientAccount do not exists', async () => {
     const { sut } = makeSut()
     AccountFacadeFactory.create().find = jest.fn().mockReturnValueOnce(Promise.reject(new Error()))
