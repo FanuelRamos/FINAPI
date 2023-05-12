@@ -9,12 +9,12 @@ export interface AddTransactionUseCaseInputDTO {
 }
 
 export interface AddTransactionUseCaseOutputDTO {
-  id?: Id
+  id: string
   senderAccount: string
   senderName: string
   recipientAccount: string
   recepientName: string
   amount: number
-  createdAt?: Date
-  updatedAt?: Date
+  createdAt: Date
+  updatedAt: Date
 }
