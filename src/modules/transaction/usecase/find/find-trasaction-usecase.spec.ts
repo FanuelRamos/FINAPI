@@ -9,7 +9,7 @@ const input = {
 }
 
 const expectedOutput = {
-  id: new Id().id,
+  id: new Id(),
   senderAccount: new Id().id,
   senderName: 'Any_Sender_Name',
   recipientAccount: new Id().id,
@@ -52,5 +52,18 @@ describe('FindTransactionUseCase tests', () => {
     repository.find = jest.fn()
     const promise = sut.execute(input)
     await expect(promise).rejects.toThrowError('Transaction not found')
+  })
+
+  test('Should return a transaction on success', async () => {
+    const { sut, repository } = makeSut()
+    const output = await sut.execute(input)
+    expect(output).toBeTruthy()
+    expect(output.id).toBeDefined()
+    expect(output.senderAccount).toBe(expectedOutput.senderAccount)
+    expect(output.senderName).toBe(expectedOutput.senderName)
+    expect(output.recipientAccount).toBe(expectedOutput.recipientAccount)
+    expect(output.recipientName).toBe(expectedOutput.recipientName)
+    expect(output.amount).toBe(expectedOutput.amount)
+    expect(output.createdAt).toBe(expectedOutput.createdAt)
   })
 })
