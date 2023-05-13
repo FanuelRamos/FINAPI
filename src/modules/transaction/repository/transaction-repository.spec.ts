@@ -45,6 +45,33 @@ describe('TransactionRepository tests', () => {
     expect(result).toBeFalsy()
   })
 
+  test('Should return a transaction if id exists', async () => {
+    const transactionRepository = makeSut()
+
+    await TransactionModel.create({
+      id: fakeTransaction.id.id,
+      senderAccount: fakeTransaction.senderAccount,
+      senderName: fakeTransaction.senderName,
+      recipientAccount: fakeTransaction.recipientAccount,
+      recipientName: fakeTransaction.recipientName,
+      amount: fakeTransaction.amount,
+      createdAt: fakeTransaction.createdAt,
+      updatedAt: fakeTransaction.updatedAt
+    })
+
+    const result = await transactionRepository.findById(fakeTransaction.id.id)
+
+    expect(result).toBeTruthy()
+    expect(result?.id).toBeDefined()
+    expect(result?.senderAccount).toBe(fakeTransaction.senderAccount)
+    expect(result?.senderName).toBe(fakeTransaction.senderName)
+    expect(result?.recipientAccount).toBe(fakeTransaction.recipientAccount)
+    expect(result?.recipientName).toBe(fakeTransaction.recipientName)
+    expect(result?.amount).toBe(fakeTransaction.amount)
+    expect(result?.createdAt).toEqual(fakeTransaction.createdAt)
+    expect(result?.updatedAt).toEqual(fakeTransaction.updatedAt)
+  })
+
   afterEach(async () => {
     await dropCollections()
   })
