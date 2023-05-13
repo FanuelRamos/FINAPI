@@ -5,7 +5,7 @@ import { FindTransactionUseCaseInputDTO, FindTransactionUseCaseOutputDTO } from 
 export default class FindTransactionUseCase implements UseCaseInterface<FindTransactionUseCaseInputDTO, FindTransactionUseCaseOutputDTO> {
   constructor (private _repository: TransactionGateway) {}
 
-  async execute (input: FindTransactionUseCaseInputDTO): Promise<any> {
+  async execute (input: FindTransactionUseCaseInputDTO): Promise<FindTransactionUseCaseOutputDTO> {
     const transaction = await this._repository.find(input.filter)
     if (!transaction) {
       throw new Error('Transaction not found')
