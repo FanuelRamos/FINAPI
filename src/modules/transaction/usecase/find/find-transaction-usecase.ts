@@ -7,6 +7,9 @@ export default class FindTransactionUseCase implements UseCaseInterface<FindTran
 
   async execute (input: FindTransactionUseCaseInputDTO): Promise<any> {
     const transaction = await this._repository.find(input.filter)
+    if (!transaction) {
+      throw new Error('Transaction not found')
+    }
     return null
   }
 }
