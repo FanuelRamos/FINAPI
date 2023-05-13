@@ -39,6 +39,7 @@ AccountFacadeFactory.create = jest.fn().mockReturnValue({
 const MockRepository = (): TransactionGateway => {
   return {
     add: jest.fn(),
+    findById: jest.fn(),
     find: jest.fn()
   }
 }

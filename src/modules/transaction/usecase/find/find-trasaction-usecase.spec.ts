@@ -21,6 +21,7 @@ const expectedOutput = {
 const MockRepository = (): TransactionGateway => {
   return {
     add: jest.fn(),
+    findById: jest.fn(),
     find: jest.fn().mockReturnValue(Promise.resolve(expectedOutput))
   }
 }
