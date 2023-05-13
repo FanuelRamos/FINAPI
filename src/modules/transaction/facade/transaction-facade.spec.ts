@@ -3,6 +3,7 @@ import { connectDb, dropCollections, dropDb } from '../../@shared/utils/mongodb-
 import AccountFacadeFactory from '../../account/factory/account-facade-factory'
 import TransactionEntity from '../entity/transaction-entity'
 import TransactionFacadeFactory from '../factory/transaction-facade-factory'
+import { TransactionModel } from '../repository/transaction-model'
 
 const fakeAccountInput = {
   name: 'any_name',
@@ -53,6 +54,43 @@ describe('TransactionFacade tests', () => {
     expect(output.recipientAccount).toBe(fakeTransactionInput.recipientAccount)
     expect(output.recipientName).toBe(fakeTransactionInput.recipientName)
     expect(output.amount).toBe(fakeTransactionInput.amount)
+    expect(output.createdAt).toBeDefined()
+  })
+
+  test('Should be able to find a Transaction', async () => {
+    const transactionFacade = makeSut()
+
+    const fakeTransaction = new TransactionEntity({
+      senderAccount: new Id().id,
+      senderName: 'Any_Sender_Name',
+      recipientAccount: new Id().id,
+      recipientName: 'Any_Recepient_Name',
+      amount: 25000
+    })
+
+    await TransactionModel.create({
+      id: fakeTransaction.id.id,
+      senderAccount: fakeTransaction.senderAccount,
+      senderName: fakeTransaction.senderName,
+      recipientAccount: fakeTransaction.recipientAccount,
+      recipientName: fakeTransaction.recipientName,
+      amount: fakeTransaction.amount,
+      createdAt: fakeTransaction.createdAt,
+      updatedAt: fakeTransaction.updatedAt
+    })
+
+    const output = await transactionFacade.find({
+      filter: {
+        id: fakeTransaction.id.id
+      }
+    })
+    expect(output).toBeTruthy()
+    expect(output.id).toBeDefined()
+    expect(output.senderAccount).toBe(fakeTransaction.senderAccount)
+    expect(output.senderName).toBe(fakeTransaction.senderName)
+    expect(output.recipientAccount).toBe(fakeTransaction.recipientAccount)
+    expect(output.recipientName).toBe(fakeTransaction.recipientName)
+    expect(output.amount).toBe(fakeTransaction.amount)
     expect(output.createdAt).toBeDefined()
   })
 
