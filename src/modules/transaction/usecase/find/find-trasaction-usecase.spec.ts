@@ -20,8 +20,8 @@ const expectedOutput = {
 
 const MockRepository = (): TransactionGateway => {
   return {
-    add: jest.fn().mockReturnValue(Promise.resolve(expectedOutput)),
-    find: jest.fn()
+    add: jest.fn(),
+    find: jest.fn().mockReturnValue(Promise.resolve(expectedOutput))
   }
 }
 
@@ -45,5 +45,12 @@ describe('FindTransactionUseCase tests', () => {
     const findSpy = jest.spyOn(repository, 'find')
     await sut.execute(input)
     expect(findSpy).toHaveBeenCalledWith(input.filter)
+  })
+
+  test('Should throw if transaction do not exists', async () => {
+    const { sut, repository } = makeSut()
+    repository.find = jest.fn()
+    const promise = sut.execute(input)
+    await expect(promise).rejects.toThrowError('Transaction not found')
   })
 })
