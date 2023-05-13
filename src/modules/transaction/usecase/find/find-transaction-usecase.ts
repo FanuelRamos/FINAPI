@@ -10,6 +10,14 @@ export default class FindTransactionUseCase implements UseCaseInterface<FindTran
     if (!transaction) {
       throw new Error('Transaction not found')
     }
-    return null
+    return {
+      id: transaction.id.id,
+      senderAccount: transaction.senderAccount,
+      senderName: transaction.senderName,
+      recipientAccount: transaction.recipientAccount,
+      recipientName: transaction.recipientName,
+      amount: transaction.amount,
+      createdAt: transaction.createdAt
+    }
   }
 }
