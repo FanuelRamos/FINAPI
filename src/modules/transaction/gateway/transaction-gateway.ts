@@ -3,5 +3,6 @@ import Transaction from '../entity/transaction-entity'
 
 export default interface TransactionGateway {
   add (transaction: Transaction): Promise<void>
-  find (filter: FilterQuery<unknown>): Promise<Transaction>
+  findById (id: string): Promise<Transaction | null>
+  find (filter: FilterQuery<unknown>): Promise<Transaction | null>
 }
