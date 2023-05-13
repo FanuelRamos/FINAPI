@@ -34,6 +34,17 @@ export default class TransactionRepository implements TransactionGateway {
   }
 
   async find (filter: FilterQuery<unknown>): Promise<TransactionEntity | null> {
-    throw new Error('Not implemented')
+    const transaction = await TransactionModel.findOne(filter)
+    if (!transaction) return null
+    return new TransactionEntity({
+      id: new Id(transaction.id),
+      senderAccount: transaction.senderAccount!,
+      senderName: transaction.senderName!,
+      recipientAccount: transaction.recipientAccount!,
+      recipientName: transaction.recipientName!,
+      amount: transaction.amount!,
+      createdAt: transaction.createdAt,
+      updatedAt: transaction.updatedAt
+    })
   }
 }
