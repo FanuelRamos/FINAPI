@@ -72,6 +72,14 @@ describe('TransactionRepository tests', () => {
     expect(result?.updatedAt).toEqual(fakeTransaction.updatedAt)
   })
 
+  test('Should not return a transaction if do not exists a transaction with given filters', async () => {
+    const transactionRepository = makeSut()
+
+    const result = await transactionRepository.find({ senderName: fakeTransaction.senderName })
+
+    expect(result).toBeFalsy()
+  })
+
   afterEach(async () => {
     await dropCollections()
   })
