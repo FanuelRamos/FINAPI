@@ -37,6 +37,14 @@ describe('TransactionRepository tests', () => {
     expect(result?.updatedAt).toEqual(fakeTransaction.updatedAt)
   })
 
+  test('Should not find a transaction that do not exists', async () => {
+    const transactionRepository = makeSut()
+
+    const result = await transactionRepository.findById(fakeTransaction.id.id)
+
+    expect(result).toBeFalsy()
+  })
+
   afterEach(async () => {
     await dropCollections()
   })
