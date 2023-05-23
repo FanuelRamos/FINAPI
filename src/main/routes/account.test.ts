@@ -3,8 +3,6 @@ import request from 'supertest'
 import app from '../config/app'
 import { Response } from 'express'
 
-let conn: any = null
-
 const makePostReuqest = async (): Promise<any> => {
   return await request(app)
     .post('/api/account')
@@ -22,7 +20,7 @@ const makePostReuqest = async (): Promise<any> => {
 
 describe('Account routes test', () => {
   beforeAll(async () => {
-    conn = await mongoose.connect(process.env.MONGO_URI_TEST!)
+    await mongoose.connect(process.env.MONGO_URI_TEST!)
   })
 
   describe('POST /account', () => {
@@ -116,6 +114,6 @@ describe('Account routes test', () => {
   })
 
   afterAll(async () => {
-    await conn.close
+    await mongoose.connection.close()
   })
 })
