@@ -8,4 +8,5 @@ export default (router: Router): void => {
   router.put('/account', adaptRoute(AccountFacadeFactory, 'update'))
   router.post('/account/statement', adaptRoute(AccountFacadeFactory, 'addStatement'))
   router.get('/account/statement', adaptRoute(AccountFacadeFactory, 'findStatement'))
+  router.get('/account/balance', adaptRoute(AccountFacadeFactory, 'getBalance'))
 }
