@@ -3,5 +3,6 @@ import { adaptRoute } from '../adapters/express-route-adapter'
 import AccountFacadeFactory from '../../modules/account/factory/account-facade-factory'
 
 export default (router: Router): void => {
-  router.post('/signup', adaptRoute(AccountFacadeFactory, 'add'))
+  router.post('/account', adaptRoute(AccountFacadeFactory, 'add'))
+  router.get('/account', adaptRoute(AccountFacadeFactory, 'find'))
 }
