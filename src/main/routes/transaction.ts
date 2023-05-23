@@ -4,4 +4,5 @@ import TransactionFacadeFactory from '../../modules/transaction/factory/transact
 
 export default (router: Router): void => {
   router.post('/transaction', adaptRoute(TransactionFacadeFactory, 'add'))
+  router.get('/transaction', adaptRoute(TransactionFacadeFactory, 'find'))
 }
