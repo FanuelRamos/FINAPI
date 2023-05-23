@@ -166,6 +166,33 @@ describe('AccountFacade unit test', () => {
     expect(statement[1].type).toBe('debit')
   })
 
+  test('Should get balance', async () => {
+    const accountFacade = makeSut()
+
+    await createFakeAccount(fakeAccount)
+
+    const fakeStatement1 = {
+      account: fakeAccount.id.id,
+      transaction: new Id().id,
+      amount: 25000,
+      type: 'credit'
+    }
+
+    const fakeStatement2 = {
+      account: fakeAccount.id.id,
+      transaction: new Id().id,
+      amount: 35000,
+      type: 'credit'
+    }
+    await accountFacade.addStatement(fakeStatement1)
+    await accountFacade.addStatement(fakeStatement2)
+
+    const statement = await accountFacade.getBalance({ id: fakeAccount.id.id })
+
+    expect(statement).toBeTruthy()
+    expect(statement.balance).toBe(fakeStatement1.amount + fakeStatement2.amount)
+  })
+
   afterEach(async () => {
     await dropCollections()
   })
