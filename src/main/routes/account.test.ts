@@ -9,10 +9,10 @@ describe('Account routes test', () => {
     conn = await mongoose.connect(process.env.MONGO_URI_TEST!)
   })
 
-  describe('POST /signup', () => {
+  describe('POST /account', () => {
     test('Should return 200 on signup', async () => {
       await request(app)
-        .post('/api/signup')
+        .post('/api/account')
         .send({
           name: 'any_name',
           burth: new Date(),
@@ -22,6 +22,32 @@ describe('Account routes test', () => {
           postalCode: '0000',
           phone: '+244939781000',
           email: 'any_email@mail.com'
+        })
+        .expect(200)
+    })
+  })
+
+  describe('GET /account', () => {
+    test('Should return 200 on signup', async () => {
+      await request(app)
+        .post('/api/account')
+        .send({
+          name: 'any_name',
+          burth: new Date(),
+          country: 'any_country',
+          city: 'any_city',
+          address: 'any_address',
+          postalCode: '0000',
+          phone: '+244939781000',
+          email: 'any_email@mail.com'
+        })
+
+      await request(app)
+        .get('/api/account')
+        .send({
+          filter: {
+            email: 'any_email@mail.com'
+          }
         })
         .expect(200)
     })
