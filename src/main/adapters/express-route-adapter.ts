@@ -7,7 +7,7 @@ export const adaptRoute = (moduleFactory: any, method: string): any => {
       const resultReturned = await factory[method](request.body)
       response.status(200).json(resultReturned)
     } catch (error) {
-      response.status(400).json(error)
+      response.status(400).json({ error: error.message })
     }
   }
 }
