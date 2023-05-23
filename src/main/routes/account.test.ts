@@ -80,6 +80,30 @@ describe('Account routes test', () => {
     })
   })
 
+  describe('POST /account/statement', () => {
+    test('Should return 200 on add a Statement', async () => {
+      await makePostReuqest()
+
+      const account = await request(app)
+        .get('/api/account')
+        .send({
+          filter: {
+            email: 'any_email@mail.com'
+          }
+        })
+
+      await request(app)
+        .post('/api/account/statement')
+        .send({
+          account: account.body.id,
+          transaction: 'any_id_transaction',
+          amount: 25000,
+          type: 'credit'
+        })
+        .expect(200)
+    })
+  })
+
   afterEach(async () => {
     await mongoose.connection.dropCollection('accounts')
   })
