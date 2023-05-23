@@ -9,6 +9,8 @@ import {
   FindAccountFacadeInputDTO,
   FindAccountFacadeOutputDTO,
   FindStatementFacadeInputDTO,
+  GetBalanceFacadeInputDTO,
+  GetBalanceFacadeOutputDTO,
   UpdateAccountFacadeInputDTO,
   UpdateAccountFacadeOutputDTO
 } from './account-facade-interface'
@@ -19,6 +21,7 @@ interface UseCaseProps {
   updateAccountUseCase: UseCaseInterface<UpdateAccountFacadeInputDTO, UpdateAccountFacadeOutputDTO>
   addStatementUseCase: UseCaseInterface<AddStatementFacadeInputDTO, AddStatementFacadeOutputDTO>
   findStatementUseCase: UseCaseInterface<FindStatementFacadeInputDTO, Statement[]>
+  getBalanceUseCase: UseCaseInterface<GetBalanceFacadeInputDTO, GetBalanceFacadeOutputDTO>
 }
 
 export default class AccountFacade implements AccountFacadeInterface {
@@ -27,6 +30,7 @@ export default class AccountFacade implements AccountFacadeInterface {
   private _updateAccountUseCase: UseCaseInterface<UpdateAccountFacadeInputDTO, UpdateAccountFacadeOutputDTO>
   private _addStatementUseCase: UseCaseInterface<AddStatementFacadeInputDTO, AddStatementFacadeOutputDTO>
   private _findStatementUseCase: UseCaseInterface<FindStatementFacadeInputDTO, Statement[]>
+  private _getBalanceUseCase: UseCaseInterface<GetBalanceFacadeInputDTO, GetBalanceFacadeOutputDTO>
 
   constructor (props: UseCaseProps) {
     this._addAccountUseCase = props.addAccountUseCase
@@ -34,6 +38,7 @@ export default class AccountFacade implements AccountFacadeInterface {
     this._updateAccountUseCase = props.updateAccountUseCase
     this._addStatementUseCase = props.addStatementUseCase
     this._findStatementUseCase = props.findStatementUseCase
+    this._getBalanceUseCase = props.getBalanceUseCase
   }
 
   async add (input: AddAccountFacadeInputDTO): Promise<AddAccountFacadeOutputDTO> {
@@ -54,5 +59,9 @@ export default class AccountFacade implements AccountFacadeInterface {
 
   async findStatement (input: FindStatementFacadeInputDTO): Promise<Statement[]> {
     return await this._findStatementUseCase.execute(input)
+  }
+
+  async getBalance (input: GetBalanceFacadeInputDTO): Promise<GetBalanceFacadeOutputDTO> {
+    return await this._getBalanceUseCase.execute(input)
   }
 }

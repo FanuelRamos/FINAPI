@@ -87,10 +87,19 @@ export interface FindStatementFacadeInputDTO {
   id: string
 }
 
+export interface GetBalanceFacadeInputDTO {
+  id: string
+}
+
+export interface GetBalanceFacadeOutputDTO {
+  balance: number
+}
+
 export interface AccountFacadeInterface {
   add(input: AddAccountFacadeInputDTO): Promise<AddAccountFacadeOutputDTO>
   find(input: FindAccountFacadeInputDTO): Promise<FindAccountFacadeOutputDTO>
   update(input: UpdateAccountFacadeInputDTO): Promise<UpdateAccountFacadeOutputDTO>
   addStatement(input: AddStatementFacadeInputDTO): Promise<AddStatementFacadeOutputDTO>
   findStatement(input: FindStatementFacadeInputDTO): Promise<Statement[]>
+  getBalance(input: GetBalanceFacadeInputDTO): Promise<GetBalanceFacadeOutputDTO>
 }
