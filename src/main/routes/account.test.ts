@@ -109,6 +109,28 @@ describe('Account routes test', () => {
     })
   })
 
+  describe('GET /account/balance', () => {
+    test('Should return 200 on add a Statement', async () => {
+      const account = await makePostReuqest()
+
+      await request(app)
+        .post('/api/account/statement')
+        .send({
+          account: account.body.id,
+          transaction: 'any_id_transaction',
+          amount: 25000,
+          type: 'credit'
+        })
+
+      await request(app)
+        .get('/api/account/balance')
+        .send({
+          id: account.body.id
+        })
+        .expect(200)
+    })
+  })
+
   afterEach(async () => {
     await mongoose.connection.dropCollection('accounts')
   })
