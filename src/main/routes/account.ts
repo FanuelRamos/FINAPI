@@ -6,4 +6,5 @@ export default (router: Router): void => {
   router.post('/account', adaptRoute(AccountFacadeFactory, 'add'))
   router.get('/account', adaptRoute(AccountFacadeFactory, 'find'))
   router.put('/account', adaptRoute(AccountFacadeFactory, 'update'))
+  router.post('/account/statement', adaptRoute(AccountFacadeFactory, 'addStatement'))
 }
