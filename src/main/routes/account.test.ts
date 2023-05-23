@@ -1,11 +1,12 @@
 import mongoose from 'mongoose'
 import request from 'supertest'
 import app from '../config/app'
+import { Response } from 'express'
 
 let conn: any = null
 
-const makePostReuqest = async (): Promise<void> => {
-  await request(app)
+const makePostReuqest = async (): Promise<any> => {
+  return await request(app)
     .post('/api/account')
     .send({
       name: 'any_name',
@@ -59,15 +60,7 @@ describe('Account routes test', () => {
 
   describe('PUT /account', () => {
     test('Should return 200 on update account', async () => {
-      await makePostReuqest()
-
-      const account = await request(app)
-        .get('/api/account')
-        .send({
-          filter: {
-            email: 'any_email@mail.com'
-          }
-        })
+      const account = await makePostReuqest()
 
       await request(app)
         .put('/api/account')
@@ -82,15 +75,7 @@ describe('Account routes test', () => {
 
   describe('POST /account/statement', () => {
     test('Should return 200 on add a Statement', async () => {
-      await makePostReuqest()
-
-      const account = await request(app)
-        .get('/api/account')
-        .send({
-          filter: {
-            email: 'any_email@mail.com'
-          }
-        })
+      const account = await makePostReuqest()
 
       await request(app)
         .post('/api/account/statement')
@@ -99,6 +84,28 @@ describe('Account routes test', () => {
           transaction: 'any_id_transaction',
           amount: 25000,
           type: 'credit'
+        })
+        .expect(200)
+    })
+  })
+
+  describe('GET /account/statement', () => {
+    test('Should return 200 on add a Statement', async () => {
+      const account = await makePostReuqest()
+
+      await request(app)
+        .post('/api/account/statement')
+        .send({
+          account: account.body.id,
+          transaction: 'any_id_transaction',
+          amount: 25000,
+          type: 'credit'
+        })
+
+      await request(app)
+        .get('/api/account/statement')
+        .send({
+          id: account.body.id
         })
         .expect(200)
     })
