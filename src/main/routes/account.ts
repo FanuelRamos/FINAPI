@@ -5,4 +5,5 @@ import AccountFacadeFactory from '../../modules/account/factory/account-facade-f
 export default (router: Router): void => {
   router.post('/account', adaptRoute(AccountFacadeFactory, 'add'))
   router.get('/account', adaptRoute(AccountFacadeFactory, 'find'))
+  router.put('/account', adaptRoute(AccountFacadeFactory, 'update'))
 }
