@@ -51,6 +51,41 @@ describe('Transactions routes test', () => {
     })
   })
 
+  describe('GET /transaction', () => {
+    test('Should return 200 on find a transaction', async () => {
+      const senderAccount = await makePostReuqest()
+      const recipientAccount = await makePostReuqest('any_email1@mail.com')
+
+      await request(app)
+        .post('/api/account/statement')
+        .send({
+          account: senderAccount.body.id,
+          transaction: 'any_id_transaction',
+          amount: 25000,
+          type: 'credit'
+        })
+
+      const transaction = await request(app)
+        .post('/api/transaction')
+        .send({
+          senderAccount: senderAccount.body.id,
+          senderName: senderAccount.body.name,
+          recipientAccount: recipientAccount.body.id,
+          recipientName: recipientAccount.body.name,
+          amount: 2500
+        })
+
+      await request(app)
+        .get('/api/transaction')
+        .send({
+          filter: {
+            id: transaction.body.id
+          }
+        })
+        .expect(200)
+    })
+  })
+
   afterEach(async () => {
     await mongoose.connection.dropCollection('accounts')
   })
