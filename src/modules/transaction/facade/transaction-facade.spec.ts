@@ -34,6 +34,13 @@ describe('TransactionFacade tests', () => {
     const transactionFacade = makeSut()
     fakeAccountInput.name = 'Any_Sender_Name'
     const senderAccount = await AccountFacadeFactory.create().add(fakeAccountInput)
+    await AccountFacadeFactory.create().addStatement({
+      account: senderAccount.id,
+      transaction: new Id().id,
+      amount: 35000,
+      type: 'credit'
+    })
+
     fakeAccountInput.name = 'Any_Recepient_Name'
     fakeAccountInput.email = 'Any_Recepient_Name@mail.com'
     const recipientAccount = await AccountFacadeFactory.create().add(fakeAccountInput)

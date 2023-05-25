@@ -1,5 +1,6 @@
 import Id from '../../../@shared/domain/value-object/id-value-object'
 import AccountGateway from '../../gateway/account-gateway'
+import GetBalanceUseCase from '../get-balance/get-balance-usecase'
 import { AddStatementUseCaseInputDTO } from './add-statement-dto'
 import AddStatementUseCase from './add-statement-usecase'
 
@@ -27,6 +28,13 @@ const MockRepository = (): AccountGateway => {
   }
 }
 
+jest.spyOn(GetBalanceUseCase.prototype, 'execute')
+  .mockImplementation(async () => {
+    return {
+      balance: input.amount
+    }
+  })
+
 type sutTypes = {
   repository: AccountGateway
   sut: AddStatementUseCase
@@ -49,6 +57,18 @@ describe('AddStatementUseCase unit test', () => {
     const promise = sut.execute(input)
 
     await expect(promise).rejects.toThrowError('Could not add statement')
+  })
+
+  test('Should throws if it do not have enough founds', async () => {
+    const { sut } = makeSut()
+    const promise = sut.execute({
+      account: new Id().id,
+      transaction: new Id().id,
+      amount: 35000,
+      type: 'debit'
+    })
+
+    await expect(promise).rejects.toThrowError('Insufficient funds')
   })
 
   test('Should be able to add a Statement', async () => {
